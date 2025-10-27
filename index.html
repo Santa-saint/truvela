@@ -325,38 +325,6 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>One Bedroom Unit - Houses up to 2 Guests</h3>
-                        <div class="pricing-location">Gauteng</div>
-                    </div>
-                    <div class="pricing-content">
-                        <div class="price-range">
-                            <span class="price-from">From</span>
-                            <span class="price-amount">R600</span>
-                            <span class="price-period">per night</span>
-                        </div>
-                        <ul class="pricing-features">
-                            <li><i class="fas fa-check"></i> One bed</li>
-                            <li><i class="fas fa-check"></i> One bath</li>
-                            <li><i class="fas fa-check"></i> Full kitchen access</li>
-                            <li><i class="fas fa-check"></i> Spacious living room</li>
-                            <li><i class="fas fa-check"></i> Swimming pool access</li>
-                            <li><i class="fas fa-check"></i> 24-hour security</li>
-                            <li><i class="fas fa-check"></i> Premium amenities</li>
-                        </ul>
-                        <div class="pricing-cta">
-                            <a href="https://www.airbnb.com/rooms/1529911119668131314?source_impression_id=p3_1760362668_P3ELTI_s3hye_Rsf" target="_blank" class="pricing-button">
-                                <i class="fab fa-airbnb"></i>
-                                Book Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                
-                
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">Most Popular</div>
-                    <div class="pricing-header">
                         <h3>Two Bedroom Unit - Houses up to 4 Guests</h3>
                         <div class="pricing-location">Gauteng</div>
                     </div>
@@ -375,7 +343,7 @@
                             <li><i class="fas fa-check"></i> Swimming pool access</li>
                         </ul>
                         <div class="pricing-cta">
-                            <a href="https://www.airbnb.com/rooms/1529911190922401020?source_impression_id=p3_1760363312_P3lAq9Ee0cJXW1pH" target="_blank" class="pricing-button featured-button">
+                            <a href="https://www.airbnb.com/rooms/1529911190922401020?source_impression_id=p3_1760363312_P3lAq9Ee0cJXW1pH" target="_blank" class="pricing-button">
                                 <i class="fab fa-airbnb"></i>
                                 Book Now
                             </a>
@@ -387,6 +355,7 @@
                     
                     <div class="pricing-header">
                         <h3>Three Bedroom Unit - Houses up to 6 Guests</h3>
+                        <div class="pricing-badge">Most Popular</div>
                         <div class="pricing-location">Gauteng</div>
                     </div>
                     <div class="pricing-content">
@@ -424,6 +393,103 @@
         </div>
     </section>
 
+<!-- Long-Term Stay / Monthly Discount Section (insert BEFORE the Reviews Section) -->
+<section id="longterm" class="longterm section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Long-Term Stays & Monthly Discounts</h2>
+      <p class="section-subtitle">Planning to stay 30+ nights? Enjoy special monthly pricing, bundled utilities, and priority support for long-term guests.</p>
+    </div>
+
+    <div class="longterm-grid">
+      <div class="longterm-info">
+        <p>Planning a longer stay? Settle into comfort with a fully furnished apartment designed for real living — not just visiting. Enjoy exclusive monthly discounts, flexible lease options, and everything you need to feel at home for weeks or months at a time. Ideal for relocating professionals, remote workers, and guests who prefer a turnkey home with predictable costs. Monthly bookings include high-speed Wi-Fi, reasonable utilities, linens, and optional weekly cleaning at an extra fee. Contact us with your move-in date and desired length of stay for a tailored quote.</p>
+
+        <ul class="longterm-features">
+          <li><i class="fas fa-percent"></i> Exclusive monthly discount (30+ nights)</li>
+          <li><i class="fas fa-wifi"></i> High-speed internet included</li>
+          <li><i class="fas fa-bolt"></i> Utilities bundled for simpler budgeting</li>
+          <li><i class="fas fa-headset"></i> Dedicated host support & concierge</li>
+        </ul>
+
+        <div class="longterm-actions">
+          <button id="lt-open-btn" class="submit-button" aria-haspopup="dialog" aria-controls="lt-modal">Start Inquiry</button>
+        </div>
+        <p class="longterm-note"><i class="fas fa-info-circle"></i> For exact discounts, include preferred move-in date and stay length in your inquiry.</p>
+      </div>
+
+      <div class="longterm-preview">
+        <img src="images/frontvieww.jpg" alt="Long term stay preview" style="width:100%; height:280px; object-fit:cover; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.12);">
+        <div class="longterm-cta" style="margin-top:12px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal (hidden by default) -->
+  <div id="lt-modal-backdrop" class="lt-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div id="lt-modal" class="lt-modal" role="document" aria-labelledby="lt-modal-title">
+      <header class="lt-modal-header">
+        <h3 id="lt-modal-title">Long-Term Stay Inquiry</h3>
+        <button id="lt-close-btn" class="close" aria-label="Close">&times;</button>
+      </header>
+
+      <!-- Formspree endpoint — same as your contact form -->
+      <form id="longTermForm" action="https://formspree.io/f/xqayzwwl" method="POST" class="contact-form" novalidate>
+        <input type="hidden" name="_subject" value="Long-term stay inquiry">
+        <!-- Honeypot -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="form-group">
+          <input type="text" id="lt_name" name="name" placeholder="Full name" required>
+          <span class="form-error" id="lt_nameError"></span>
+        </div>
+
+        <div class="form-group">
+          <input type="email" id="lt_email" name="email" placeholder="Email address" required>
+          <span class="form-error" id="lt_emailError"></span>
+        </div>
+
+        <div class="form-group">
+          <input type="tel" id="lt_phone" name="phone" placeholder="Phone number" required>
+          <span class="form-error" id="lt_phoneError"></span>
+        </div>
+
+        <div class="form-group">
+          <label style="display:block; margin-bottom:6px; color:var(--text-light); font-weight:600;">Preferred move-in date *</label>
+          <input type="date" id="lt_movein" name="move_in_date" required>
+        </div>
+
+        <div class="form-group">
+          <input type="number" id="lt_months" name="length_months" placeholder="Length of stay (months)" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" id="lt_budget" name="budget" placeholder="Budget / target monthly rent (optional)">
+        </div>
+
+        <div class="form-group">
+          <textarea id="lt_message" name="message" rows="4" placeholder="I’m interested in a long-term stay at your apartment..." required></textarea>
+          <span class="form-error" id="lt_messageError"></span>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+          <button type="submit" id="lt-submit-btn" class="submit-button">
+            <span>Send Inquiry</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+          <button type="button" id="lt-cancel-btn" class="submit-button" style="background:transparent;color:var(--primary-blue);border:2px solid var(--border-light);">
+            Cancel
+          </button>
+        </div>
+
+        <div id="lt-form-status" class="helper" style="margin-top:12px;" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+<!-- End Long-Term Stay Section -->
+    
     <!-- Reviews Section -->
     <section id="reviews" class="reviews">
         <div class="container">
