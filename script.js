@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeGallery();
     initializeFAQ();
     initializeContactForm();
+    initializeLongTerm();
     initializeScrollEffects();
     initializeParallax();
 });
@@ -429,3 +430,115 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
 });
+
+// Long-term stay modal + form handling
+function initializeLongTerm() {
+  const openBtn = document.getElementById('lt-open-btn');
+  const backdrop = document.getElementById('lt-modal-backdrop');
+  const modal = document.getElementById('lt-modal');
+  const closeBtn = document.getElementById('lt-close-btn');
+  const cancelBtn = document.getElementById('lt-cancel-btn');
+  const form = document.getElementById('longTermForm');
+  const submitBtn = document.getElementById('lt-submit-btn');
+  const statusEl = document.getElementById('lt-form-status');
+
+  if (!openBtn || !backdrop || !modal || !form) return;
+
+  // Prefill default message text (user asked for this)
+  const defaultMsg = "I'm interested in a long-term stay at your apartment. Please share monthly pricing & availability.";
+
+  function openModal() {
+    backdrop.setAttribute('aria-hidden','false');
+    // set default message only if empty
+    const msgField = document.getElementById('lt_message');
+    if (msgField && !msgField.value.trim()) msgField.value = defaultMsg;
+    // move focus to first field
+    const first = document.getElementById('lt_name');
+    if (first) first.focus();
+    // trap focus using existing trapFocus util if available
+    try { trapFocus(modal); } catch(e){}
+  }
+
+  function closeModal() {
+    backdrop.setAttribute('aria-hidden','true');
+    statusEl.textContent = '';
+    form.reset();
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn && closeBtn.addEventListener('click', closeModal);
+  cancelBtn && cancelBtn.addEventListener('click', closeModal);
+
+  // click outside to close
+  backdrop.addEventListener('click', function(e) {
+    if (e.target === backdrop) closeModal();
+  });
+
+  // Form submit (similar behavior to contact form)
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // basic client-side validation
+    const name = (document.getElementById('lt_name') || {}).value || '';
+    const email = (document.getElementById('lt_email') || {}).value || '';
+    const phone = (document.getElementById('lt_phone') || {}).value || '';
+    const message = (document.getElementById('lt_message') || {}).value || '';
+    let isValid = true;
+
+    // clear errors
+    ['lt_nameError','lt_emailError','lt_phoneError','lt_messageError'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '';
+    });
+
+    if (name.trim().length < 2) {
+      document.getElementById('lt_nameError').textContent = 'Please enter your name (2+ characters).';
+      isValid = false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      document.getElementById('lt_emailError').textContent = 'Please enter a valid email.';
+      isValid = false;
+    }
+    const phoneSan = phone.replace(/[\s\-\(\)]/g,'');
+    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+    if (!phoneRegex.test(phoneSan)) {
+      document.getElementById('lt_phoneError').textContent = 'Please enter a valid phone number.';
+      isValid = false;
+    }
+    if (message.trim().length < 10) {
+      document.getElementById('lt_messageError').textContent = 'Please include a short message (10+ chars).';
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
+    // send
+    submitBtn.disabled = true;
+    const originalHTML = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
+    statusEl.textContent = '';
+
+    const fd = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: fd
+    })
+    .then(response => {
+      if (response.ok) return response.json().catch(()=>({ok:true}));
+      return response.json().then(err=>Promise.reject(err)).catch(()=>Promise.reject({error:'Submit failed'}));
+    })
+    .then(() => {
+      statusEl.textContent = 'Thanks — your inquiry was sent. We’ll reply with availability and monthly pricing.';
+      submitBtn.innerHTML = '<span>Sent</span> <i class="fas fa-check"></i>';
+      setTimeout(() => { closeModal(); submitBtn.innerHTML = originalHTML; submitBtn.disabled = false; }, 1400);
+    })
+    .catch(() => {
+      statusEl.textContent = 'Oops — there was an error sending your inquiry. Please try again or email bookings@truvelaapartments.com';
+      submitBtn.innerHTML = '<span>Error</span> <i class="fas fa-exclamation-triangle"></i>';
+      submitBtn.style.background = '#e74c3c';
+      setTimeout(() => { submitBtn.innerHTML = originalHTML; submitBtn.disabled = false; submitBtn.style.background = ''; }, 2000);
+    });
+  });
+}
