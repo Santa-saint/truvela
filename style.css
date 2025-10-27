@@ -1393,3 +1393,108 @@ a:focus {
     font-weight: 500;
 }
 /* ...existing code... */
+/* --- Long-Term Stay Section & Modal --- */
+.longterm {
+  padding: 4rem 0;
+  background: linear-gradient(180deg, var(--off-white), #fbfbfc);
+}
+.longterm-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 2rem;
+  align-items: start;
+}
+.longterm-info p {
+  color: var(--text-dark);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.longterm-features {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1rem;
+}
+.longterm-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-dark);
+  background: var(--pure-white);
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  font-weight: 500;
+}
+.longterm-actions { margin-top: 0.9rem; display:flex; align-items:center; gap:12px; }
+.longterm-note { color: var(--text-light); margin-top:10px; font-size:0.95rem; }
+
+/* Modal backdrop & panel */
+.lt-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  background: rgba(2,6,23,0.6);
+  z-index: 2000;
+  padding: 20px;
+  overflow-y: auto;
+}
+.lt-modal-backdrop[aria-hidden="false"] { display:flex; }
+
+.lt-modal {
+  width: 100%;
+  max-width: 720px;
+  background: var(--pure-white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(2,6,23,0.35);
+  border: 1px solid rgba(0,0,0,0.04);
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.lt-modal-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+.lt-modal-header h3 { margin:0; color:var(--primary-blue); font-size:1.25rem; }
+.lt-modal .close {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+/* form inputs inside modal reuse existing .contact-form rules but ensure spacing */
+.lt-modal .form-group { margin-bottom: 10px; }
+.lt-modal input[type="text"],
+.lt-modal input[type="email"],
+.lt-modal input[type="tel"],
+.lt-modal input[type="date"],
+.lt-modal input[type="number"],
+.lt-modal textarea {
+  width: 100%;
+  padding: 0.9rem;
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+.lt-modal input:focus, .lt-modal textarea:focus { border-color: var(--accent-gold); outline: none; }
+
+/* helper text & status */
+.lt-modal .helper { color: var(--text-light); font-size: 0.95rem; }
+#lt-form-status { color: var(--primary-blue); font-weight:600; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .longterm-grid { grid-template-columns: 1fr; }
+  .longterm-preview { order: -1; }
+}
